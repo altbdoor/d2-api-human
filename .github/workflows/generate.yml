@@ -1,12 +1,14 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Generate weapons data
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
+  schedule:
+    # https://crontab.guru/#20_19_*_*_2
+    # weekly reset = Tuesdays, 5PM UTC
+    # we add a levy of 2h 20 mins for any down time
+    - cron: '20 19 * * 2'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -22,34 +24,36 @@ jobs:
 
       - name: Run the setup script
         shell: pwsh
-        run: .\setup.ps1
+        run: $ErrorActionPreference = 'stop'; .\setup.ps1
 
       - uses: actions/checkout@v2
         with:
           ref: data
-          path: previous_dist
+          path: previous_data
 
       - id: check
         name: Check if the version has changed
         shell: pwsh
         run: |
-          $currentVersion = Get-Content ./source/version.txt
-          $previousVersion = Get-Content ./previous_dist/version.txt
+          $ErrorActionPreference = 'stop'
+          $currentVersion = Get-Content './source/version.txt'
+          $previousVersion = Get-Content './previous_data/version.txt'
           $isChanged = ($currentVersion -ne $previousVersion) ? 'yes' : 'no'
           echo "::set-output name=is_version_changed::${isChanged}"
 
   build:
     runs-on: ubuntu-latest
     needs: [ setup ]
-    if: needs.setup.outputs.is_version_changed == 'yes'
+    if: "needs.setup.outputs.is_version_changed == 'yes'"
+    # || !contains(github.event.head_commit.message, '[rmk]')
     steps:
       - name: Generate the JSON data
         shell: pwsh
-        run: .\main.ps1
+        run: $ErrorActionPreference = 'stop'; .\main.ps1
 
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: data
-          publish_dir: dist
+          publish_dir: data
           enable_jekyll: true

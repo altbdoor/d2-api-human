@@ -31,12 +31,12 @@ $remappedWeapons = $weapons | ForEach-Object {
 }
 
 Write-Output 'Writing into JSON files...'
-New-Item -ItemType Directory -Force -Path 'dist/weapons'
-Copy-Item 'source/version.txt' 'dist/'
+New-Item -ItemType Directory -Force -Path 'data/weapons'
+Copy-Item 'source/version.txt' 'data/'
 
 foreach ($weapon in $remappedWeapons) {
-    $weapon | ConvertTo-Json -Compress -Depth 100 | Out-File "dist/weapons/$($weapon.id).json"
+    $weapon | ConvertTo-Json -Compress -Depth 100 | Out-File "data/weapons/$($weapon.id).json"
 }
-$remappedWeapons | ConvertTo-Json -Compress -Depth 100 | Out-File 'dist/weapons/all.json'
+$remappedWeapons | ConvertTo-Json -Compress -Depth 100 | Out-File 'data/weapons/all.json'
 
 Write-Output 'Done!'
