@@ -23,6 +23,8 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run the setup script
+        env:
+          BUNGIE_API_KEY: ${{ secrets.BUNGIE_API_KEY }}
         shell: pwsh
         run: $ErrorActionPreference = 'stop'; .\setup.ps1
 

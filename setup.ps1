@@ -6,8 +6,13 @@ $baseUrl = 'https://www.bungie.net'
 # ========================================
 # manifest
 # ========================================
+$apiKey = ''
+if (Test-Path Env:\BUNGIE_API_KEY) {
+    $apiKey = (Get-ChildItem -Path Env:\BUNGIE_API_KEY).Name
+}
+
 $response = Invoke-WebRequest "${baseUrl}/Platform/Destiny2/Manifest/" `
-    -Headers @{ 'X-API-Key' = '' }
+    -Headers @{ 'X-API-Key' = $apiKey }
 
 $manifest = ($response.Content | ConvertFrom-Json -AsHashtable).Response
 
