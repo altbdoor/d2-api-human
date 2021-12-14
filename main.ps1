@@ -31,7 +31,7 @@ $remappedWeapons = $weapons | ForEach-Object {
 }
 
 Write-Output 'Writing into JSON files...'
-mkdir -Force -Path 'dist/weapons'
+New-Item -ItemType Directory -Force -Path 'dist/weapons'
 Copy-Item 'source/version.txt' 'dist/'
 
 foreach ($weapon in $remappedWeapons) {

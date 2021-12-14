@@ -1,4 +1,4 @@
-mkdir -Force -Path 'source'
+New-Item -ItemType Directory -Force -Path 'source'
 Set-Location 'source'
 
 $baseUrl = 'https://www.bungie.net'
