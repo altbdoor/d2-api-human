@@ -32,6 +32,8 @@ $remappedWeapons = $weapons | ForEach-Object {
     }
 }
 
+Write-Output "Remapped $(($remappedWeapons | Measure-Object).Count) weapons!"
+
 # ========================================
 Write-Output 'Writing into major JSON files...'
 New-Item -ItemType Directory -Force -Path 'data/weapons/id'
