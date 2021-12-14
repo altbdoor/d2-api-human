@@ -43,10 +43,10 @@ Copy-Item 'source/version.txt' 'data/'
 $remappedWeapons | ConvertTo-Json -Compress -Depth 100 | Out-File 'data/weapons/all.json'
 $remappedWeapons | Foreach-Object {
     [ordered]@{
-        id        = $_.hash;
-        name      = $_.displayProperties.name;
-        icon      = $_.displayProperties.icon;
-        watermark = $_.quality.displayVersionWatermarkIcons[0];
+        id        = $_.id;
+        name      = $_.name;
+        icon      = $_.icon;
+        watermark = $_.watermark;
     }
 } | ConvertTo-Json -Compress -Depth 100 | Out-File 'data/weapons/all_lite.json'
 
