@@ -26,10 +26,16 @@ jobs:
         shell: pwsh
         run: $ErrorActionPreference = 'stop'; .\setup.ps1
 
+      - uses: actions/cache@v2
+        with:
+          path: ./source
+          key: source-cache-${{ github.sha }}
+
       - uses: actions/checkout@v2
         with:
           ref: data
           path: previous_data
+        continue-on-error: true
 
       - id: check
         name: Check if the version has changed
@@ -47,6 +53,13 @@ jobs:
     if: "needs.setup.outputs.is_version_changed == 'yes'"
     # || !contains(github.event.head_commit.message, '[rmk]')
     steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: ./source
+          key: source-cache-${{ github.sha }}
+
       - name: Generate the JSON data
         shell: pwsh
         run: $ErrorActionPreference = 'stop'; .\main.ps1
