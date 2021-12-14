@@ -3,6 +3,7 @@
 Write-Output 'Loading weapons JSON file...'
 $weapons = Get-Content 'source/weapons.json' | ConvertFrom-Json
 
+# ========================================
 Write-Output 'Loading other JSON files...'
 $sunsetPowercapData = Get-Content 'source/sunset.json' | ConvertFrom-Json
 $statsData = Get-Content 'source/stats.json' | ConvertFrom-Json
@@ -10,6 +11,7 @@ $statGroupsData = Get-Content 'source/statgroups.json' | ConvertFrom-Json
 $socketsData = Get-Content 'source/sockets.json' | ConvertFrom-Json
 $plugsetsData = Get-Content 'source/plugsets.json' | ConvertFrom-Json
 
+# ========================================
 Write-Output 'Mapping into objects...'
 $remappedWeapons = $weapons | ForEach-Object {
     [ordered]@{
@@ -30,13 +32,41 @@ $remappedWeapons = $weapons | ForEach-Object {
     }
 }
 
-Write-Output 'Writing into JSON files...'
-New-Item -ItemType Directory -Force -Path 'data/weapons'
+# ========================================
+Write-Output 'Writing into major JSON files...'
+New-Item -ItemType Directory -Force -Path 'data/weapons/id'
+New-Item -ItemType Directory -Force -Path 'data/weapons/name'
 Copy-Item 'source/version.txt' 'data/'
 
-foreach ($weapon in $remappedWeapons) {
-    $weapon | ConvertTo-Json -Compress -Depth 100 | Out-File "data/weapons/$($weapon.id).json"
-}
 $remappedWeapons | ConvertTo-Json -Compress -Depth 100 | Out-File 'data/weapons/all.json'
+$remappedWeapons | Foreach-Object {
+    [ordered]@{
+        id        = $_.hash;
+        name      = $_.displayProperties.name;
+        icon      = $_.displayProperties.icon;
+        watermark = $_.quality.displayVersionWatermarkIcons[0];
+    }
+} | ConvertTo-Json -Compress -Depth 100 | Out-File 'data/weapons/all_lite.json'
 
+# ========================================
+Write-Output 'Writing into ID-based JSON files...'
+foreach ($weapon in $remappedWeapons) {
+    $weapon | ConvertTo-Json -Compress -Depth 100 | Out-File "data/weapons/id/$($weapon.id).json"
+}
+
+# ========================================
+Write-Output 'Writing into name-based JSON files...'
+$uniqueWeaponNames = $remappedWeapons.name | Sort-Object | Get-Unique
+foreach ($weaponName in $uniqueWeaponNames) {
+    $slugName = $weaponName.ToLower() -replace '[^A-z0-9]', ''
+    $matchedWeapons = $remappedWeapons | Where-Object { $_.name -eq $weaponName }
+
+    if (($matchedWeapons | Measure-Object).Count -ne 1) {
+        $matchedWeapons = ($matchedWeapons | Sort-Object id -Descending)[0]
+    }
+
+    $matchedWeapons | ConvertTo-Json -Depth 100 | Out-File "data/weapons/name/${slugName}.json"
+}
+
+# ========================================
 Write-Output 'Done!'

@@ -37,7 +37,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'stop'
           $currentVersion = Get-Content './source/version.txt'
-          $previousVersion = Get-Content './previous_data/version.txt'
+          $previousVersion = (Test-Path './previous_data/version.txt') ? (Get-Content './previous_data/version.txt') : ''
           $isChanged = ($currentVersion -ne $previousVersion) ? 'yes' : 'no'
           echo "::set-output name=is_version_changed::${isChanged}"
 
@@ -57,3 +57,6 @@ jobs:
           publish_branch: data
           publish_dir: data
           enable_jekyll: true
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
