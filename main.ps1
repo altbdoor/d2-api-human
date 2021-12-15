@@ -70,7 +70,7 @@ foreach ($weaponName in $uniqueWeaponNames) {
         $matchedWeapons = ($matchedWeapons | Sort-Object id -Descending)[0]
     }
 
-    $matchedWeapons | ConvertTo-Json -Depth 100 | Out-File "data/weapons/name/${slugName}.json"
+    $matchedWeapons | ConvertTo-Json -Compress -Depth 100 | Out-File "data/weapons/name/${slugName}.json"
 }
 
 # ========================================
