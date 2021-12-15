@@ -47,6 +47,7 @@ jobs:
           $currentVersion = Get-Content './source/version.txt'
           $previousVersion = (Test-Path './previous_data/version.txt') ? (Get-Content './previous_data/version.txt') : ''
           $isChanged = ($currentVersion -ne $previousVersion) ? 'yes' : 'no'
+          Write-Output "${previousVersion} -> ${currentVersion}"
           echo "::set-output name=is_version_changed::${isChanged}"
 
   build:
