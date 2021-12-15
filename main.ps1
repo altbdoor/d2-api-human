@@ -62,7 +62,7 @@ $uniqueWeaponNames = $remappedWeapons.name | Sort-Object | Get-Unique
 foreach ($weaponName in $uniqueWeaponNames) {
     # https://stackoverflow.com/a/49941546
     $slugName = $weaponName.ToLower().Normalize([Text.NormalizationForm]::FormD)
-    $slugName = $slugName -replace '\p{M}', '' -replace '[^A-z0-9]', ''
+    $slugName = $slugName -replace '\p{M}', '' -replace '[^A-Za-z0-9]', ''
 
     $matchedWeapons = $remappedWeapons | Where-Object { $_.name -eq $weaponName }
 
