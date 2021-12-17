@@ -5,10 +5,10 @@ on:
   push:
     branches: [ master ]
   schedule:
-    # https://crontab.guru/#20_19_*_*_2
+    # https://crontab.guru/#20_19_*_*_*
     # weekly reset = Tuesdays, 5PM UTC
     # we add a levy of 2h 20 mins for any down time
-    - cron: '20 19 * * 2'
+    - cron: '20 19 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
