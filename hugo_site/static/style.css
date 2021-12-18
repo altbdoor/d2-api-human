@@ -1,0 +1,21 @@
+.highlight {
+    margin-bottom: 1rem;
+}
+
+.highlight > div > table {
+    padding: 1rem !important;
+}
+
+.highlight tr {
+    border: 0 !important;
+}
+
+.highlight tr > td:first-child > pre > code > span {
+    display: block;
+}
+
+.highlight tr > td > pre {
+    margin-bottom: 0;
+    padding: 0 !important;
+    border-radius: 0 !important;
+}

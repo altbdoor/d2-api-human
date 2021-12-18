@@ -1,0 +1,26 @@
+baseURL: 'http://altbdoor.github.io/d2-api-human/'
+languageCode: en-us
+title: D2 API Human
+
+disableKinds:
+  - section
+  - taxonomy
+  - term
+  - RSS
+  - sitemap
+  - robotsTXT
+  - '404'
+
+ignoreErrors:
+  - error-disable-taxonomy
+
+markup:
+  goldmark:
+    parser:
+      attribute:
+        block: true
+  highlight:
+    lineNos: true
+    lineNumbersInTable: true
+    style: monokai
+    tabWidth: 2

@@ -1,0 +1,16 @@
+<h1>{{ $.Site.Title }}</h1>
+
+<p>
+    {{ $currentUrl := .RelPermalink }}
+    {{ range $.Site.Pages }}
+        {{ if eq $currentUrl .RelPermalink }}
+            <strong>
+        {{ end }}
+
+        [<a href="{{ .RelPermalink }}">{{ .Title }}</a>]
+
+        {{ if eq $currentUrl .RelPermalink }}
+            </strong>
+        {{ end }}
+    {{ end }}
+</p>
