@@ -13,11 +13,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  setup:
+  build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: hugo_site
     steps:
       - uses: actions/checkout@v2
 
@@ -26,12 +23,14 @@ jobs:
           hugo-version: '0.90.1'
 
       - name: Build
-        run: hugo --minify
+        run: |
+          cd hugo_site
+          hugo --minify
 
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: public
+          publish_dir: hugo_site/public
           force_orphan: true
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
