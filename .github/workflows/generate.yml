@@ -3,7 +3,10 @@ name: Generate weapons data
 # Controls when the workflow will run
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+    paths-ignore:
+      - 'hugo_site/**'
   schedule:
     # https://crontab.guru/#20_19_*_*_*
     # weekly reset = Tuesdays, 5PM UTC

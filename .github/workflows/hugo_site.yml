@@ -1,0 +1,37 @@
+name: Generate Hugo website
+
+# Controls when the workflow will run
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'hugo_site/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hugo_site
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.90.1'
+
+      - name: Build
+        run: hugo --minify
+
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
