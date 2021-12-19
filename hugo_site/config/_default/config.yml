@@ -15,10 +15,10 @@ ignoreErrors:
   - error-disable-taxonomy
 
 markup:
-  goldmark:
-    parser:
-      attribute:
-        block: true
+  # goldmark:
+  #   parser:
+  #     attribute:
+  #       block: true
   highlight:
     lineNos: true
     lineNumbersInTable: true

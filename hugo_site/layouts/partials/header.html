@@ -2,7 +2,7 @@
 
 <p>
     {{ $currentUrl := .RelPermalink }}
-    {{ range $.Site.Pages }}
+    {{ range $.Site.Pages.ByWeight }}
         {{ if eq $currentUrl .RelPermalink }}
             <strong>
         {{ end }}

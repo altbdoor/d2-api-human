@@ -1,10 +1,11 @@
 ---
 type: page
 layout: single
-title: Interface
+title: Data interface
+weight: 2
 ---
 
-## Basic interface
+### Basic interface
 
 Here's a sample JSON data of [Ignition Code](https://www.light.gg/db/items/304659313/ignition-code/), available at either:
 
@@ -65,15 +66,27 @@ export interface Weapon {
 }
 ```
 
+The values are subject to change, of course, should Bungie decide to add a new weapon type, or element class.
+
 ### Powercap
 
 `powercap` can either be `null`, to denote that there is no power limit, or a number specifying the power limit. As an example, [The Mountaintop](https://cdn.jsdelivr.net/gh/altbdoor/d2-api-human@data/weapons/id/3993415705.json) has `{ "powercap": 1060 }`.
 
 ### Frame
 
-Usually all weapons have their own frame, like `Lightweight frame` or `Aggressive frame`. But for exotics, they usually have their special perk in here. As an example, [Heir Apparent](https://cdn.jsdelivr.net/gh/altbdoor/d2-api-human@data/weapons/id/2084878005.json) has the `Heavy Slug Thrower` perk.
+Usually all weapons have their own frame, like `Lightweight Frame` or `Aggressive Frame`. But for exotics, they usually have their special perk in here. As an example, [Heir Apparent](https://cdn.jsdelivr.net/gh/altbdoor/d2-api-human@data/weapons/id/2084878005.json) has the `Heavy Slug Thrower` perk.
 
-```json {}
+```json {hl_lines=["4", "13"]}
+// ignition code
+{
+  "frame": {
+    "name": "Lightweight Frame",
+    "description": "One-shot handheld Grenade Launcher with remote detonation. \n[Shoot]  : Fire; release to detonate.",
+    "icon": "/common/destiny2_content/icons/530b400d5cec3bf6aca7c5efc46fea20.png"
+  }
+}
+
+// heir apparent
 {
   "frame": {
     "name": "Heavy Slug Thrower",
@@ -107,9 +120,7 @@ The `stats` have all the necessary information on the weapon stats. Even hidden 
 
 ### Perks
 
-The `perks` are a little more complicated to digest, but here goes nothing.
-
-A weapon usually have three to four perk slots, and Ignition Code has four.
+The `perks` are a little more complicated to digest. A weapon usually have three to four perk slots, and Ignition Code has four.
 
 ```json {}
 {
