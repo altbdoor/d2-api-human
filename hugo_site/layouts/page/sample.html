@@ -1,0 +1,17 @@
+{{ define "main" }}
+    {{ partial "header.html" . }}
+
+    <p>Fairly simple sample application with querying, and mock views like <a href="https://www.light.gg/">light.gg</a>.</p>
+    <p>Click <a id="load-sample" href="javascript:void(0)">here</a> to load the Stackblitz sample, or open the full <a href="https://stackblitz.com/edit/typescript-4yuyve">Stackblitz</a> editor.</p>
+
+    <iframe src="about:blank" frameborder="0" style="width: 100%; min-height: 70vh; border: 4px solid #f3f4f6; display: none;"></iframe>
+
+    <script>
+        document.querySelector('#load-sample').onclick = () => {
+            document.querySelector('iframe').style.display = 'block';
+            document.querySelector('iframe').src = 'https://typescript-4yuyve.stackblitz.io';
+        }
+    </script>
+
+    {{ partial "footer.html" . }}
+{{ end }}

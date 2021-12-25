@@ -53,7 +53,7 @@ All the JSON files are served from [jsDelivr](https://www.jsdelivr.com/) CDN, wh
 >
 > &mdash; https://github.com/jsdelivr/jsdelivr#caching
 
-jsDelivr will cache the JSON files up to 12 hours. But for browsers, it might be up to seven days. To get a newer data from the browser cache, we can append a query parameter. Example:
+jsDelivr will cache the JSON files for up to 12 hours. But browsers might cache the JSON files up to seven days. To get a newer data than the browser cache, we can append a query parameter. Example:
 
 ```ts {hl_lines=["4"]}
 const baseUrl = 'https://cdn.jsdelivr.net/gh/altbdoor/d2-api-human@data'

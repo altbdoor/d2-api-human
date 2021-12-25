@@ -1,0 +1,11 @@
+<hr>
+
+{{ define "partials/footer-links" }}
+[GitHub repo](https://github.com/altbdoor/d2-api-human) |
+[GitHub markdown CSS](https://github.com/sindresorhus/github-markdown-css)
+{{ end }}
+
+<p>
+    Generated with <a href="https://gohugo.io/">Hugo {{ hugo.Version }}</a> |
+    {{ partial "footer-links" . | markdownify }}
+</p>
