@@ -72,7 +72,7 @@ function Get-Perks {
     foreach ($entry in $cleanedEntries) {
         if ($null -ne $entry.randomizedPlugSetHash) {
             foreach ($hash in $entry.randomizedPlugSetHash) {
-                $currentPerks = $PlugsetsData.$hash | Foreach-Object { $SocketsData.($_) }
+                $currentPerks = $PlugsetsData.$hash | Foreach-Object { $SocketsData.($_) } | Where-Object { $_ -ne $null }
                 $perks += @(, $currentPerks)
             }
         } else {
