@@ -91,15 +91,11 @@ $items.Values | Where-Object {
 # ========================================
 # sockets
 # ========================================
+# weapon perks have category hash 59
 $sockets = $items.Values | Where-Object {
-    $_.itemTypeDisplayName -notcontains 'ornament' `
-        -and $_.itemTypeDisplayName -ne 'Restore Defaults' `
-        -and $_.displayProperties.name -notmatch 'Tier \d+ Weapon' `
-        -and $_.displayProperties.name -notmatch '(Memento|Mod|Catalyst) Socket' `
-        -and $_.displayProperties.name -ne 'Kill Tracker' `
-        -and $_.displayProperties.name -ne 'Tracker Disabled' `
-        -and $_.displayProperties.name -ne 'Default Ornament' `
-        -and $_.displayProperties.name -ne 'Masterwork Upgrade' `
+    $_.itemCategoryHashes -contains 59 `
+        -and $_.itemTypeDisplayName -ne 'Weapon Mod' `
+        -and $_.itemTypeDisplayName -ne '' `
         -and $_.displayProperties.name -ne ''
 }
 
@@ -143,3 +139,4 @@ foreach ($plug in $plugsets.Values) {
 }
 
 $remappedPlugsets | ConvertTo-Json -depth 100 | Out-File plugsets.json
+Set-Location '../'
