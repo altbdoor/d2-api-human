@@ -92,9 +92,15 @@ $items.Values | Where-Object {
 # sockets
 # ========================================
 $sockets = $items.Values | Where-Object {
-    $_.itemCategoryHashes -contains 610365472 `
-        -and $_.itemCategoryHashes -notcontains 3124752623 `
-        -and $_.displayProperties.name -ne 'Empty Mod Socket'
+    $_.itemTypeDisplayName -notcontains 'ornament' `
+        -and $_.itemTypeDisplayName -ne 'Restore Defaults' `
+        -and $_.displayProperties.name -notmatch 'Tier \d+ Weapon' `
+        -and $_.displayProperties.name -notmatch '(Memento|Mod|Catalyst) Socket' `
+        -and $_.displayProperties.name -ne 'Kill Tracker' `
+        -and $_.displayProperties.name -ne 'Tracker Disabled' `
+        -and $_.displayProperties.name -ne 'Default Ornament' `
+        -and $_.displayProperties.name -ne 'Masterwork Upgrade' `
+        -and $_.displayProperties.name -ne ''
 }
 
 $remappedSockets = @{}
@@ -102,11 +108,13 @@ foreach ($socket in $sockets) {
     $socketStats = @{}
 
     if ($null -ne $socket.investmentStats) {
-        $socket.investmentStats | Where-Object { $_.value -ne 0 -and $remappedStats.([string]$_.statTypeHash) -ne $null } | `
+        $socket.investmentStats | `
+            Where-Object { $_.value -ne 0 -and $remappedStats.([string]$_.statTypeHash) -ne $null } | `
             Foreach-Object { $socketStats[$remappedStats.([string]$_.statTypeHash)] = $_.value }
     }
 
     $remappedSockets[[string]$socket.hash] = @{
+        id          = $socket.hash;
         name        = $socket.displayProperties.name;
         description = $socket.displayProperties.description;
         icon        = $socket.displayProperties.icon;
